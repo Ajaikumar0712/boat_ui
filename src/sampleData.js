@@ -1,5 +1,5 @@
-// Sample Data for Testing the Dashboard
-// This file contains mock data that simulates real boat data
+// mock data for testing dashboard
+// TODO: replace with real API calls
 
 export const SAMPLE_BOAT_STATUS = {
     speed: 2.4,
@@ -8,7 +8,7 @@ export const SAMPLE_BOAT_STATUS = {
     gpsLon: 77.2090,
     mode: 'Auto',
     signalStrength: 85,
-    timestamp: new Date().toISOString(),
+    timestamp: new Date().toISOString()
 };
 
 export const SAMPLE_BATTERY_DATA = {
@@ -30,10 +30,10 @@ export const SAMPLE_WASTE_DATA = {
         plastic: 6.8,
         organic: 3.2,
         metal: 1.5,
-        paper: 0.9,
+        paper: 0.9
     },
     collectionsToday: 3,
-    totalCollections: 127,
+    totalCollections: 127
 };
 
 export const SAMPLE_MISSION_DATA = {
@@ -182,14 +182,14 @@ export const SAMPLE_ANALYTICS = {
     efficiencyScore: 89,
 };
 
-// Function to generate random realistic data
+// random data generators for testing
 export const generateRandomBoatData = () => ({
     speed: (Math.random() * 3 + 1).toFixed(1),
     heading: Math.floor(Math.random() * 360),
     gpsLat: (28.6139 + (Math.random() - 0.5) * 0.01).toFixed(6),
     gpsLon: (77.2090 + (Math.random() - 0.5) * 0.01).toFixed(6),
     mode: ['Auto', 'Manual', 'Docking'][Math.floor(Math.random() * 3)],
-    signalStrength: Math.floor(Math.random() * 30 + 70),
+    signalStrength: Math.floor(Math.random() * 30 + 70)
 });
 
 export const generateRandomBatteryData = () => ({
@@ -198,7 +198,7 @@ export const generateRandomBatteryData = () => ({
     current: (Math.random() * 2 + 2).toFixed(1),
     temperature: Math.floor(Math.random() * 10 + 25),
     estimatedRuntime: Math.floor(Math.random() * 100 + 100),
-    chargingStatus: Math.random() > 0.8 ? 'Charging' : 'Not Charging',
+    chargingStatus: Math.random() > 0.8 ? 'Charging' : 'Not Charging'
 });
 
 export default {

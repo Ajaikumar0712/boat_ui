@@ -17,33 +17,25 @@ function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeView, setActiveView] = useState('dashboard');
 
-  // Update time every second
+  // time ticker
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
-  // Render different views based on active navigation
+  // switch between different views
   const renderView = () => {
     switch (activeView) {
       case 'dashboard':
         return (
           <div className="content-grid">
-            {/* Left Panel */}
-            <div className="left-panel">
-              <CameraFeed />
-            </div>
-
-            {/* Center Panel */}
+            <div className="left-panel"><CameraFeed /></div>
             <div className="center-panel">
               <MapView />
               <MissionControl />
             </div>
-
-            {/* Right Panel */}
             <div className="right-panel">
               <BoatStatus />
               <PowerBattery />
@@ -121,14 +113,12 @@ function App() {
       case 'settings':
         return (
           <div className="content-grid single-view">
-            <div className="full-width-panel">
-              <Settings />
-            </div>
+            <div className="full-width-panel"><Settings /></div>
           </div>
         );
 
       default:
-        return renderView();
+        return renderView(); // shouldn't happen but just in case
     }
   };
 

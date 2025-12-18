@@ -1,9 +1,10 @@
 const TopBar = ({ currentTime, systemOnline, onEmergencyStop }) => {
+    // format time display
     const formatTime = (date) => {
         return date.toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit',
-            second: '2-digit',
+            second: '2-digit'
         });
     };
 
@@ -11,7 +12,7 @@ const TopBar = ({ currentTime, systemOnline, onEmergencyStop }) => {
         return date.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
-            day: 'numeric',
+            day: 'numeric'
         });
     };
 
@@ -42,10 +43,10 @@ const TopBar = ({ currentTime, systemOnline, onEmergencyStop }) => {
                     <div style={{ fontWeight: 600, fontSize: '15px' }}>{formatTime(currentTime)}</div>
                 </div>
 
-                <div className="user-profile">👤</div>
+                
 
                 <button className="emergency-stop" onClick={onEmergencyStop}>
-                    ⏹️ EMERGENCY STOP
+                    EMERGENCY STOP
                 </button>
             </div>
         </div>

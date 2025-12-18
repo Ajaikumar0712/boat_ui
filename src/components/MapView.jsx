@@ -1,23 +1,23 @@
 import { useState, useCallback } from 'react';
 import { GoogleMap, LoadScript, Marker, Polyline, Circle } from '@react-google-maps/api';
 
+// TODO: maybe move this to a separate config file?
 const MapView = ({ fullScreen }) => {
     const [map, setMap] = useState(null);
     const [zoomLevel, setZoomLevel] = useState(15);
 
-    // Center coordinates (Delhi, India - you can change this to your location)
+    // Default center - Delhi coords
     const center = {
         lat: 28.6139,
         lng: 77.2090,
     };
 
-    // Map container style
     const containerStyle = {
         width: '100%',
         height: fullScreen ? '700px' : '500px',
     };
 
-    // River path coordinates (simulate a river/canal path)
+    // simulating river path here
     const riverPath = [
         { lat: 28.6100, lng: 77.2050 },
         { lat: 28.6120, lng: 77.2070 },
@@ -26,20 +26,15 @@ const MapView = ({ fullScreen }) => {
         { lat: 28.6180, lng: 77.2130 },
     ];
 
-    // Boat current position
-    const boatPosition = {
-        lat: 28.6139,
-        lng: 77.2090,
-    };
+    const boatPosition = { lat: 28.6139, lng: 77.2090 };
 
-    // Waste hotspots
+    // detected waste locations
     const wasteHotspots = [
         { id: 1, lat: 28.6105, lng: 77.2055, severity: 'high', count: 23 },
         { id: 2, lat: 28.6145, lng: 77.2095, severity: 'medium', count: 12 },
         { id: 3, lat: 28.6170, lng: 77.2120, severity: 'low', count: 5 },
     ];
 
-    // Map options
     const mapOptions = {
         disableDefaultUI: false,
         zoomControl: true,
@@ -48,10 +43,11 @@ const MapView = ({ fullScreen }) => {
         streetViewControl: false,
         rotateControl: false,
         fullscreenControl: true,
-        mapTypeId: 'satellite', // or 'roadmap', 'hybrid', 'terrain'
+        mapTypeId: 'satellite',
     };
 
     const onLoad = useCallback((map) => {
+        console.log('Map loaded successfully');
         setMap(map);
     }, []);
 
@@ -59,23 +55,18 @@ const MapView = ({ fullScreen }) => {
         setMap(null);
     }, []);
 
-    // Get color based on severity
-    const getSeverityColor = (severity) => {
+    // helper function for severity colors
+    function getSeverityColor(severity) {
+        // could use a map object here but switch works fine
         switch (severity) {
-            case 'high':
-                return '#ff3b3b';
-            case 'medium':
-                return '#ff9800';
-            case 'low':
-                return '#ffeb3b';
-            default:
-                return '#00d4d4';
+            case 'high': return '#ff3b3b';
+            case 'medium': return '#ff9800';
+            case 'low': return '#ffeb3b';
+            default: return '#00d4d4';
         }
-    };
+    }
 
-    // Google Maps API Key - REPLACE WITH YOUR OWN KEY
-    // Get your key from: https://console.cloud.google.com/google/maps-apis
-    const googleMapsApiKey = "YOUR_GOOGLE_MAPS_API_KEY";
+    const googleMapsApiKey = "AIzaSyDzd5-JJ7nJYfgQkgksIHFPcqgezzWv8y0"; // API key
 
     return (
         <div className="card fade-in">
@@ -85,18 +76,14 @@ const MapView = ({ fullScreen }) => {
                     Interactive Map View - Google Maps
                 </div>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <button
-                        className="map-control-btn"
+                    <button className="map-control-btn"
                         onClick={() => map && map.setZoom(map.getZoom() + 1)}
-                        title="Zoom In"
-                    >
+                        title="Zoom In">
                         +
                     </button>
-                    <button
-                        className="map-control-btn"
+                    <button className="map-control-btn"
                         onClick={() => map && map.setZoom(map.getZoom() - 1)}
-                        title="Zoom Out"
-                    >
+                        title="Zoom Out">
                         −
                     </button>
                 </div>
@@ -162,20 +149,19 @@ const MapView = ({ fullScreen }) => {
                             zoom={zoomLevel}
                             onLoad={onLoad}
                             onUnmount={onUnmount}
-                            options={mapOptions}
-                        >
-                            {/* River Path */}
+                            options={mapOptions}>
+                            {/* river path overlay */}
                             <Polyline
                                 path={riverPath}
                                 options={{
                                     strokeColor: '#00d4d4',
                                     strokeOpacity: 0.8,
                                     strokeWeight: 4,
-                                    geodesic: true,
+                                    geodesic: true
                                 }}
                             />
 
-                            {/* Cleaned Path (behind boat) */}
+                            {/* cleaned section */}
                             <Polyline
                                 path={riverPath.slice(0, 3)}
                                 options={{
@@ -183,11 +169,11 @@ const MapView = ({ fullScreen }) => {
                                     strokeOpacity: 0.6,
                                     strokeWeight: 3,
                                     geodesic: true,
-                                    strokePattern: [10, 5],
+                                    strokePattern: [10, 5]
                                 }}
                             />
 
-                            {/* Boat Marker */}
+                            {/* boat location marker */}
                             <Marker
                                 position={boatPosition}
                                 icon={{
@@ -197,13 +183,12 @@ const MapView = ({ fullScreen }) => {
                                     strokeColor: '#00ffff',
                                     strokeWeight: 2,
                                     scale: 6,
-                                    rotation: 45,
+                                    rotation: 45
                                 }}
                                 title="Cleaning Boat"
                                 animation={window.google?.maps?.Animation?.BOUNCE}
                             />
 
-                            {/* Waste Hotspots */}
                             {wasteHotspots.map((hotspot) => (
                                 <div key={hotspot.id}>
                                     <Marker
@@ -214,7 +199,7 @@ const MapView = ({ fullScreen }) => {
                                             fillOpacity: 0.9,
                                             strokeColor: '#ffffff',
                                             strokeWeight: 2,
-                                            scale: 8,
+                                            scale: 8
                                         }}
                                         title={`Waste Hotspot: ${hotspot.count} items (${hotspot.severity})`}
                                     />
@@ -226,7 +211,7 @@ const MapView = ({ fullScreen }) => {
                                             fillOpacity: 0.2,
                                             strokeColor: getSeverityColor(hotspot.severity),
                                             strokeOpacity: 0.5,
-                                            strokeWeight: 1,
+                                            strokeWeight: 1
                                         }}
                                     />
                                 </div>
@@ -235,7 +220,7 @@ const MapView = ({ fullScreen }) => {
                     </LoadScript>
                 )}
 
-                {/* Map Legend */}
+                {/* legend */}
                 <div style={{ marginTop: '16px', display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--font-size-xs)' }}>
                         <div style={{ width: '12px', height: '12px', background: '#00d4d4', borderRadius: '50%' }}></div>

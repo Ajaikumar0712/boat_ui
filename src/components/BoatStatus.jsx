@@ -1,12 +1,16 @@
+// boat status component
 const BoatStatus = () => {
+    // hardcoded for now, will eventually pull from API
     const boatData = {
         speed: 2.4,
         heading: 127,
         gpsLat: 28.6139,
         gpsLon: 77.2090,
         mode: 'Auto',
-        signalStrength: 85,
+        signalStrength: 85
     };
+
+    // console.log('Boat data:', boatData); // for debugging
 
     return (
         <div className="card slide-in">
