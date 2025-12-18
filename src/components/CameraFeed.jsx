@@ -15,7 +15,7 @@ const CameraFeed = () => {
             <div className="card-header">
                 <div className="card-title">
                     <span className="card-icon">📹</span>
-                    Front Camera – AI Waste Detection
+                    Front Camera
                 </div>
             </div>
 

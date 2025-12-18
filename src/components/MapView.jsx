@@ -73,7 +73,7 @@ const MapView = ({ fullScreen }) => {
             <div className="card-header">
                 <div className="card-title">
                     <span className="card-icon">🗺️</span>
-                    Interactive Map View - Google Maps
+                    Map View
                 </div>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <button className="map-control-btn"
